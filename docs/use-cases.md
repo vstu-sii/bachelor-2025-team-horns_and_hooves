@@ -169,5 +169,5 @@
 
 ## Use-case UML диаграммы
 
-![UML диаграмма](assets/Use%20Case%202.png)
+![UML диаграмма]([assets/Use%20Case%202.png](https://github.com/vstu-sii/bachelor-2025-team-horns_and_hooves/blob/D2/docs/assets/UseCase2.png))
 <center>Рис. 1 – UML диаграмма</center>
