@@ -99,5 +99,5 @@
 
 ## Use-case UML диаграммы
 
-![UML диаграмма](assets/Use Case 2.png)
+![UML диаграмма](docs/assets/Use Case 2.png)
 <center>Рис. 1 – UML диаграмма</center>
