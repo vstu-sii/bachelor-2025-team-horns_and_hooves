@@ -23,6 +23,11 @@ services:
       - db                            # Ждём готовности базы данных PostgreSQL
       - redis                         # Ждём готовности Redis
     restart: unless-stopped           # Автоматический перезапуск при сбое
+    logging:                          # Отправляем логи в Loki
+      driver: "loki"
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-external-labels: "container_name={{.Name}},service=web"
     networks:
       - default
       - monitoring
@@ -74,6 +79,11 @@ services:
     ports:
       - "5432:5432"                              
     restart: unless-stopped
+    logging:
+      driver: "loki"
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-external-labels: "container_name={{.Name}},service=postgres"
     networks:
       - default
       - monitoring
@@ -87,6 +97,11 @@ services:
     volumes:
       - redis_data:/data                          # Том для хранения данных Redis
     restart: unless-stopped
+    logging:
+      driver: "loki"
+      options:                                    # Отправляем логи в Loki
+        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-external-labels: "container_name={{.Name}},service=redis"
     networks:
       - default
       - monitoring
@@ -104,6 +119,11 @@ services:
     depends_on:
       - web                                       # Ждём готовности Django-приложения
     restart: unless-stopped
+    logging:                                      # Отправляем логи в Loki
+      driver: "loki"
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-external-labels: "container_name={{.Name}},service=nginx"
   
   # Ollama — вторая модель ИИ с архитектурой RAG.
   ollama:
