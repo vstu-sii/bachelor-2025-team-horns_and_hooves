@@ -8,8 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: >
-      sh -c "python manage.py wait_for_db &&
-             python manage.py migrate &&
+      sh -c "python manage.py migrate &&
              python manage.py collectstatic --no-input &&
              gunicorn --bind 0.0.0.0:8000 sleepproject.wsgi:application"
     volumes:
@@ -24,6 +23,9 @@ services:
       - db                            # Ждём готовности базы данных PostgreSQL
       - redis                         # Ждём готовности Redis
     restart: unless-stopped           # Автоматический перезапуск при сбое
+    networks:
+      - default
+      - monitoring
 
   # Celery worker — обработчик асинхронных задач.
   # Здесь выполняются фоновые задачи: анализ сна, импорт CSV, расчёты.
@@ -72,6 +74,9 @@ services:
     ports:
       - "5432:5432"                              
     restart: unless-stopped
+    networks:
+      - default
+      - monitoring
 
   # Redis — брокер сообщений и кэш.
   # Используется для очередей задач Celery и для кэширования данных в Django.
@@ -82,6 +87,9 @@ services:
     volumes:
       - redis_data:/data                          # Том для хранения данных Redis
     restart: unless-stopped
+    networks:
+      - default
+      - monitoring
 
   # Nginx — фронтовой веб-сервер.
   # Отвечает за отдачу статических и медиафайлов, а также проксирует запросы к Django.
@@ -123,3 +131,7 @@ volumes:
   redis_data:      # Том для хранения данных Redis
   static_volume:   # Том для хранения статических файлов Django
   media_volume:    # Том для хранения медиафайлов Django
+
+networks:
+  monitoring:
+    external: true
