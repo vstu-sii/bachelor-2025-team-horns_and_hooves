@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block title %}Сон и здоровье{% endblock %}</title>
+    <link rel="icon" href="{% static 'image/logo_no_background.png' %}" type="image/png">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% block scripts %}
+
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-themed">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'image/logo_no_background.png' %}" alt="Логотип GoodSleepPro" class="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">{{ request.user.username }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'sleep_statistics_show' %}">Статистика сна</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'sleep_records_from_csv' %}">Добавить данные о сне</a>
+            </li>
+            {% block exit %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'custom_logout' %}?next={% url 'login' %}">Выйти</a>
+                </li>
+            {% endblock %}
+        </ul>
+    </div>
+</nav>
+<div id="content">
+    {% block content %}
+        <div class="content-wrapper">
+        <div class="text-block">
+            <h1 class="display-3 font-weight-bold mb-5">Сон —</h1>
+            <h3 class="mb-5">самый лучший вид релакса</h3>
+            <a href="{% url 'sleep_records_from_csv' %}" class="btn btn-hero">
+                Добавить данные о сне
+            </a>
+        </div>
+        <div class="image-block">
+            <img src="{% static 'image/Sleep_man.png' %}"
+                 alt="Иллюстрация сна"
+                 class="big-sleep-image">
+        </div>
+    </div>
+    {% endblock %}
+
+</div>
+
+
+<footer class="footer-themed mt-auto py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                <div class="d-inline-flex align-items-center">
+                    <img src="{% static 'image/logo_no_background.png' %}" alt="GoodSleepPro" class="logo mr-2" style="height: 28px;">
+                    <span>Сон и здоровье</span>
+                    <span class="mx-2">•</span>
+                    <small>&copy; GoodSleepPro Company {% now "Y" %}</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-inline mb-0 d-flex flex-wrap justify-content-center justify-content-md-end">
+                    <li class="list-inline-item mb-2"><a href="{% url 'sleep_statistics_show' %}">Статистика сна</a></li>
+                    <li class="list-inline-item mb-2"><a href="{% url 'profile' %}">Профиль</a></li>
+                    <li class="list-inline-item mb-2"><a href="{% url 'sleep_records_from_csv' %}">Добавить данные</a></li>
+                    <li class="list-inline-item mb-2"><a href="{% url 'sleep_chronotype' %}">Узнать больше о хронотипах</a></li>
+                    <li class="list-inline-item mb-2"><a href="{% url 'sleep_fragmentation' %}">Узнать больше о метриках сна</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+
+</html>
+
