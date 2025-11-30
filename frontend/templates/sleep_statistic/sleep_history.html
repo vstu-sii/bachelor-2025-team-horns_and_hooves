@@ -1,0 +1,138 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+    История сна
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <!-- Заголовок раздела -->
+                <div class="card profile-card border-0 shadow-sm mb-4">
+                    <div class="profile-header">
+                        
+                        <div class="d-flex flex-column">
+                            <h4 class="mb-4 ">История сна</h4>
+                            <div class="text-muted">Просматривайте динамику ключевых метрик сна и анализируйте изменения
+                                по страницам данных.
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'sleep_fragmentation' %}" class="btn-hero btn-hero--sm"><i
+                                        class="bi bi-info-circle mr-1"></i> Узнать больше о параметрах</a>
+                            </div>
+                            <div class="mt-3">
+                                <p class="small text-muted mb-2">Показать данные за:</p>
+                                <div class="d-flex flex-wrap gap-2" id="mode-buttons">
+                                    <button type="button"
+                                            class="sleep-mode-btn mode-btn {% if page_size == 7 %}active{% endif %}"
+                                            data-mode="week">
+                                        <i class="bi bi-calendar-week me-1"></i> Неделя
+                                    </button>
+                                    <button type="button"
+                                            class="sleep-mode-btn mode-btn {% if page_size == 30 %}active{% endif %}"
+                                            data-mode="month">
+                                        <i class="bi bi-calendar-month me-1"></i> Месяц
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Графики -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card profile-card border-0 shadow-sm h-100">
+                            <div class="profile-header profile-header--indigo">
+                                <div class="profile-avatar profile-avatar--indigo"><i class="bi bi-hourglass-split"></i>
+                                </div>
+                                <div>
+                                    <h2 class="h5 mb-0" id="title_text">Sleep Latency</h2>
+                                    <div class="text-muted">Время засыпания</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="graph-Latency"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card profile-card border-0 shadow-sm h-100">
+                            <div class="profile-header profile-header--teal">
+                                <div class="profile-avatar profile-avatar--teal"><i class="bi bi-activity"></i></div>
+                                <div>
+                                    <h2 class="h5 mb-0" id="title_text">Sleep Efficiency</h2>
+                                    <div class="text-muted">Эффективность сна</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="graph-Efficiency"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card profile-card border-0 shadow-sm h-100">
+                            <div class="profile-header profile-header--amber">
+                                <div class="profile-avatar profile-avatar--amber"><i class="bi bi-lightning-charge"></i>
+                                </div>
+                                <div>
+                                    <h2 class="h5 mb-0" id="title_text">Fragmentation</h2>
+                                    <div class="text-muted">Фрагментация сна</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="graph-Fragmentation"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card profile-card border-0 shadow-sm h-100">
+                            <div class="profile-header profile-header--rose">
+                                <div class="profile-avatar profile-avatar--rose"><i class="bi bi-fire"></i></div>
+                                <div>
+                                    <h2 class="h5 mb-0" id="title_text">Calories</h2>
+                                    <div class="text-muted">Каллории</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="graph-Calories"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Навигация -->
+                <div class="d-flex justify-content-around mb-3" id="pagination">
+                    {% if has_previous %}
+                        <a href="#" id="prev-btn" class="btn-hero btn-hero--sm btn-hero--muted mr-2"
+                           data-cursor="{{ prev_cursor }}">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    {% endif %}
+                    {% if has_next %}
+                        <a href="#" id="next-btn" class="btn-hero btn-hero--sm btn-hero--muted"
+                           data-cursor="{{ next_cursor }}">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@10.3.3/highcharts.js"></script>
+
+    <script src="{% static 'javascript/sleep_history_chart.js' %}"></script>
+    <script>
+        const sleepHistoryAjaxUrl = "{% url 'sleep_history' %}";
+        const initialGraphData = {{ graph_data_json|safe }};
+        let currentPageSize = {{ page_size|safe }};
+    </script>
+{% endblock %}
