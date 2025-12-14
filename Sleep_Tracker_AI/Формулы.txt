@@ -1,0 +1,55 @@
+Не переводится при регистрации: This password is too short. It must contain at least 8 characters.
+
+
+
+https://rrsociology.ru/media/medicine/2022/2/Биомедицинские_исследования_июнь_2022-102-113.pdf
+
+https://www.calculatorultra.com/ru/tool/sleep-calories-calculator.html#gsc.tab=0
+
+
+Хронотип: https://dzen.ru/a/ZecFR0Ou4VIKD1dA
+https://kuban24.tv/item/zhavoronok-chto-govorit-o-cheloveke-utrennij-hronotip
+https://kuban24.tv/item/sova-chto-govorit-o-cheloveke-nochnoj-hronotip
+
+Латентность:
+https://translated.turbopages.org/proxy_u/en-ru.ru.2004f494-68a0b9c6-4ad62464-74722d776562/https/www.verywellhealth.com/sleep-latency-3014920
+
+Эффективность сна:
+https://translated.turbopages.org/proxy_u/en-ru.ru.3b53bdfd-68a0bcf7-ba73c436-74722d776562/https/en.wikipedia.org/wiki/Sleep_efficiency
+
+Фрагментация сна:
+https://translated.turbopages.org/proxy_u/en-ru.ru.48046b6f-68a0bdc4-438c0cec-74722d776562/https/www.verywellhealth.com/what-is-a-false-awakening-3014835
+https://www.numberanalytics.com/blog/arousal-index-key-to-better-sleep
+
+библиотеки:
+https://pypi.org/project/django-cursor-pagination
+
+Документация:
+https://www.highcharts.com/docs/index
+https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html#django-first-steps
+https://docs.djangoproject.com/en/5.2
+
+
+Аналоги: https://elitehrv.com
+
+https://welltory.com/
+
+
+Хранение бд в https://msk.cloud.vk.com/app/mcs5667516136/main?service=storage%3Futm_source%3Dyandex.direct.DL&utm_medium=cpc&utm_campaign=y_storage_search_general_rf_62716505&utm_content=17065368255&utm_term=amazon%20s3&yclid=8143759458373730303
+Необходимо закинуть на S3
+
+запуск celery:
+docker run -d -p 6381:6379 redis
+
+celery -A sleepproject worker -l info -P solo
+
+
+Запомнитьь фон: #f8f9fa
+
+
+Кеширование: https://dizballanze.com/ru/django-project-optimization-part-2
+
+
+
+после билд основного докера и запуска loki докера нужно прописать команду в терминале:
+docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
