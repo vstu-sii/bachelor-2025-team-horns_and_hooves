@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'celery_progress',
     'dragndrop_related',
-    #'debug_toolbar',
+    'debug_toolbar',
     'sleep_tracking_app',
 
 ]
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -178,11 +178,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 
-OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://ollama:11434')
-LOKI_URL = os.getenv('LOKI_URL', 'http://loki:3100')
-PROMETHEUS_URL = os.getenv('PROMETHEUS_URL', 'http://prometheus:9090')
-GRAFANA_URL = os.getenv('GRAFANA_URL', 'http://grafana:3000')
-
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -195,5 +190,6 @@ CACHES = {
 
 
 INTERNAL_IPS = [
+
     '127.0.0.1',
 ]
