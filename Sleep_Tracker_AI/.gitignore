@@ -1,0 +1,11 @@
+**/*.pyc.*
+*.pyc
+.env
+**/.env
+sleepproject/media/tmp
+dataset
+.idea
+.venv
+.history
+**/*.dat
+.dat

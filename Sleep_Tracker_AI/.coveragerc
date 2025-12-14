@@ -1,0 +1,22 @@
+[run]
+omit =
+    */csv_data_extraction.py
+    */calculations.py
+    */sleep_statistic/gigachat.py
+    */sleep_statistic/num_to_str.py
+    */admin.py
+    */tasks.py
+
+
+[report]
+# Ignore these common directories from reports
+exclude_lines =
+    # Don't complain about pragmas or generated code
+    pragma: no cover
+
+# Optionally hide these files from the report (globs supported)
+omit =
+    */.venv/*
+    */venv/*
+    */site-packages/*
+    htmlcov/*
