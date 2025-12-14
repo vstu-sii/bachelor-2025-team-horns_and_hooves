@@ -1,8 +1,0 @@
-apiVersion: 1                     # версия API для конфигурации источников данных (фиксированное значение)
-
-datasources:
-  - name: Prometheus              # имя источника данных (будет видно в интерфейсе Grafana)
-    type: prometheus              # тип источника — Prometheus
-    access: proxy                 # доступ через backend Grafana (проксируется запросами от сервера Grafana)
-    url: http://prometheus:9090   # адрес Prometheus внутри docker-сети (имя контейнера + порт)
-    isDefault: true               # сделать этот источник данных основным по умолчанию
