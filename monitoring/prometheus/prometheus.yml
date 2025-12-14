@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s          # как часто Prometheus будет собирать метрики (каждые 15 секунд)
+  evaluation_interval: 15s      # как часто будут пересчитываться правила и выражения (alerting, recording rules)
+
+scrape_configs:
+  # Сам Prometheus — он тоже может отдавать свои метрики
+  - job_name: 'prometheus'      # имя джоба (отображается в интерфейсе)
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Redis Exporter — собирает метрики из Redis и отдает их Prometheus
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:9121']
+
+  # PostgreSQL Exporter — собирает метрики из PostgreSQL
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres_exporter:9187']
