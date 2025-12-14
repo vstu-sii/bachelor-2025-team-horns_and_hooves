@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: langfuse-server
+  name: langfuse-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: langfuse-server
+  template:
+    metadata:
+      labels:
+        io.kompose.service: langfuse-server
+    spec:
+      containers:
+        - name: langfuse-server
+          image: langfuse/langfuse:latest
+          envFrom:
+            - secretRef:
+                name: app-env
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+      restartPolicy: Always

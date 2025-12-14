@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: promtail
+  name: promtail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: promtail
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: promtail
+    spec:
+      containers:
+        - image: grafana/promtail:latest
+          name: promtail
+          envFrom:
+            - secretRef:
+                name: app-env
+          ports:
+            - containerPort: 9080
+              protocol: TCP
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/lib/docker/containers
+              name: promtail-claim0
+              readOnly: true
+            - mountPath: /etc/promtail/config.yml
+              name: promtail-cm2
+              subPath: config.yml
+      restartPolicy: Always
+      volumes:
+        - name: promtail-claim0
+          persistentVolumeClaim:
+            claimName: promtail-claim0
+            readOnly: true
+        - configMap:
+            items:
+              - key: promtail-config.yaml
+                path: config.yml
+            name: promtail-cm2
+          name: promtail-cm2

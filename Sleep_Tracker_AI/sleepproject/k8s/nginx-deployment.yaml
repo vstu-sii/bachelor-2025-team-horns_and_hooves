@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: nginx
+    spec:
+      containers:
+        - image: nginx:1.25
+          name: nginx
+          envFrom:
+            - secretRef:
+                name: app-env
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: nginx-cm0
+              subPath: default.conf
+            - mountPath: /app/static
+              name: static-volume
+            - mountPath: /app/media
+              name: media-volume
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: default.conf
+                path: default.conf
+            name: nginx-cm0
+          name: nginx-cm0
+        - name: static-volume
+          persistentVolumeClaim:
+            claimName: static-volume
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: media-volume

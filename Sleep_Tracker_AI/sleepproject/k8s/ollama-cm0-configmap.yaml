@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  id_ed25519: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
+    c2gtZWQyNTUxOQAAACBZdGeOSyHrbhj/OrMF1pEQwJbhK7qnnOWWkh/Ftj4yLgAA
+    AIg4WwQpOFsEKQAAAAtzc2gtZWQyNTUxOQAAACBZdGeOSyHrbhj/OrMF1pEQwJbh
+    K7qnnOWWkh/Ftj4yLgAAAEBgcPn89jcRtiwAA8vPqUh835B4qrwmj8v8Qqoo7oUb
+    gFl0Z45LIetuGP86swXWkRDAluEruqec5ZaSH8W2PjIuAAAAAAECAwQF
+    -----END OPENSSH PRIVATE KEY-----
+  id_ed25519.pub: |
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFl0Z45LIetuGP86swXWkRDAluEruqec5ZaSH8W2PjIu
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: ollama
+  name: ollama-cm0

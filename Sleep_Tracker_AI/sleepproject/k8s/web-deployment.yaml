@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+        - args:
+            - sh
+            - -c
+            - |-
+              python manage.py makemigrations &&
+                     python manage.py migrate &&
+                     python manage.py collectstatic --no-input &&
+                     gunicorn --bind 0.0.0.0:8000 sleepproject.wsgi:application
+          envFrom:
+            - configMapRef:
+                name: env
+          image: sleepproject-web:v4
+          name: web
+          envFrom:
+            - secretRef:
+                name: app-env
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: static-volume
+              mountPath: /app/static
+            - name: media-volume
+              mountPath: /app/media
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+      restartPolicy: Always
+      volumes:
+        - name: static-volume
+          persistentVolumeClaim:
+            claimName: static-volume
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: media-volume

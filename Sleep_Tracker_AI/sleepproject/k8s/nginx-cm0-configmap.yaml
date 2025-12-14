@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  default.conf: "upstream web {\n    server web:8000;\n}\n\nserver {\n    listen 80;\n    server_name localhost;\n\n    # Security headers\n    add_header X-Content-Type-Options \"nosniff\" always;\n    add_header X-XSS-Protection \"1; mode=block\" always;\n    add_header X-Frame-Options \"SAMEORIGIN\" always;\n    add_header Referrer-Policy \"strict-origin-when-cross-origin\" always;\n\n    # Static files\n    location /static/ {\n        alias /app/static/;\n        access_log off;\n        expires 30d;\n        add_header Cache-Control \"public, no-transform\";\n        try_files $uri $uri/ =404;\n    }\n\n    # Media files\n    location /media/ {\n        alias /app/media/;\n        access_log off;\n        expires 30d;\n        add_header Cache-Control \"public, no-transform\";\n        try_files $uri $uri/ =404;\n    }\n\n    # Proxy pass to Django\n    location / {\n        proxy_pass http://web;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \"upgrade\";\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        \n        # Timeouts\n        proxy_connect_timeout 10s;\n        proxy_read_timeout 10s;\n        \n        # Buffer size\n        proxy_buffers 8 32k;\n        proxy_buffer_size 64k;\n        \n        # Max upload size\n        client_max_body_size 100M;\n    }\n\n    # Health check endpoint\n    location /health/ {\n        access_log off;\n        add_header Content-Type text/plain;\n        return 200 \"healthy\\n\";\n    }\n\n    # Deny access to .htaccess files\n    location ~ /\\.ht {\n        deny all;\n    }\n\n    # Deny access to hidden files\n    location ~ /\\.[^/]+\\.(?!well-known) {\n        deny all;\n    }\n}\n"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: nginx
+  name: nginx-cm0

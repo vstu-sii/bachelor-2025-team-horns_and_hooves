@@ -1,0 +1,25 @@
+apiVersion: v1
+data:
+  BASELINE_MAX_RETRIES: "3"
+  BASELINE_RETRY_DELAY: "1.5"
+  BD_NAME: bd_sleepstatistic
+  BD_PASSWORD: NeMoVetr
+  BD_USER: admin
+  CELERY_BROKER_URL: redis://redis:6379/0
+  DJANGO_SECRET_KEY: django-insecure-i9tb^dtocrkak$q(aw(i5je%9accm@lldyy4-m2c3y_q-k77df
+  EMAIL_HOST_PASSWORD: 42b804cff3ede89df9d69c92e4db388c
+  EMAIL_HOST_USER: goodsleeppro@yandex.ru
+  GEMINI_API_KEY: AIzaSyAu6aOBPQWlF1FsP0cZV6bTk8OuTGXpq0k
+  GEMINI_MODEL: gemini-2.0-flash
+  GigaChat_API: N2JmODVkYWMtZTRiZi00YjE5LTgzMGItMGIwNThjNjRiOTdhOmJhNjAxNjhmLTdmMjQtNDdhZC05NDIwLWQ0YWE4N2I3Yzk2Yg==
+  GigaChat_Client_ID: 7bf85dac-e4bf-4b19-830b-0b058c64b97a
+  LANGFUSE_HOST: http://localhost:3000
+  LANGFUSE_PUBLIC_KEY: pk-lf-8da06922-7291-476b-bc6c-f38e37a153e9
+  LANGFUSE_SECRET_KEY: sk-lf-de338b0a-9bde-4406-9cdc-1f59dfb3fa55
+  MEDIA_ROOT: /app/media
+  STATIC_ROOT: /app/static
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: celery-env
+  name: env

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: clickhouse
+  name: clickhouse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: clickhouse
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: clickhouse
+    spec:
+      containers:
+        - name: clickhouse
+          image: clickhouse/clickhouse-server:latest
+          envFrom:
+            - secretRef:
+                name: app-env
+          ports:
+            - containerPort: 9000
+              protocol: TCP
+            - containerPort: 8123
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/clickhouse
+              name: clickhouse-data
+      restartPolicy: Always
+      volumes:
+        - name: clickhouse-data
+          persistentVolumeClaim:
+            claimName: clickhouse-data
